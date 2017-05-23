@@ -1,0 +1,44 @@
+{% extends 'union/base.html' %}
+{% block title %}All Member{% endblock %}
+{% block people_active %}class="active"{% endblock %}
+{% block body %}
+<div class="container-fluid songs-container">
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Student ID</th>
+                                <th>Sex</th>
+                                <th>Major</th>
+                                <th>Union</th>
+                                <th>Add</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                                <tr>
+                                    <td>{{ member.name }}</td>
+                                    <td>{{ member.member_id }}</td>
+                                    <td>{{ member.sex }}</td>
+                                    <td>{{ member.major }}</td>
+                                    <td>{{ member.union.name }}</td>
+                                    <td>{{ member.add_time | date:'Y-m-d'}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
