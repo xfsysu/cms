@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Union(models.Model):
 	user = models.ForeignKey(User, default=1)
-	name = models.CharField(max_length=100)
+	name = models.CharField(max_length=100, unique=True)
 	logo = models.FileField()
 	created_time = models.DateTimeField(auto_now=True)
 	people = models.IntegerField(default=0)

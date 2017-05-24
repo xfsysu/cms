@@ -9,7 +9,7 @@ IMAGE_FILE_TYPE = ['jpg', 'png', 'jpeg']
 
 def index(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:	
 		unions = Union.objects.filter(user=request.user)
 		return render(request, 'union/index.html', {'unions':unions})
@@ -20,7 +20,7 @@ def detail(request, union_id):
 
 def union_add(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:
 		form = UnionForm(request.POST or None, request.FILES or None)
 
@@ -45,15 +45,15 @@ def union_add(request):
 
 def union_delete(request, union_id):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:
 		union = get_object_or_404(Union, pk=union_id)
 		union.delete()
-		return HttpResponseRedirect(reverse('union:index'), kwargs={})
+		return HttpResponseRedirect(reverse('union:index'))
 
 def member_add(request, union_id):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:
 		form = MemberForm(request.POST or None)
 		union = get_object_or_404(Union, pk=union_id)
@@ -73,7 +73,7 @@ def member_add(request, union_id):
 
 def member_delete(request, member_id):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:
 		member = get_object_or_404(Member, pk=member_id)
 		union_id = member.union.id
@@ -83,7 +83,7 @@ def member_delete(request, member_id):
 
 def member_edit(request, member_id):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:
 		member = get_object_or_404(Member, pk=member_id)
 		union = member.union
@@ -105,7 +105,7 @@ def member_edit(request, member_id):
 
 def view_all(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+		return HttpResponseRedirect(reverse('union:login_user'))
 	else:
 		unions = Union.objects.filter(user=request.user)
 		members = []
@@ -125,7 +125,7 @@ def login_user(request):
 			if user.is_active:
 				login(request, user)
 				unions = Union.objects.filter(user=request.user)
-				return render(request, 'union/index.html', {'unions':unions})
+				return HttpResponseRedirect(reverse('union:index'))
 			else:
 				return render(request, 'union/login.html', {'error_message':"Your Account is disabled!"})
 		else:
@@ -153,4 +153,4 @@ def register(request):
 
 def logout_user(request):
 	logout(request)
-	return HttpResponseRedirect(reverse('union:login_user', kwargs={}))
+	return HttpResponseRedirect(reverse('union:login_user'))
