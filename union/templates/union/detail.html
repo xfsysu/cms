@@ -17,7 +17,7 @@
     						{% endif %}
     					</a>
     					<h1>{{ union.name }}</h1>
-    					<h2><span class="glyphicon glyphicon-user"></span> {{ union.people }}</h2>
+    					<h2><span class="glyphicon glyphicon-time"></span> {{ union.created_time | date:'Y' }}</h2>
     				</div>
     			</div>
     		</div>
@@ -26,8 +26,9 @@
     		<div class="col-sm-8 col-md-9">
     			
     			<ul class="nav nav-pills" style="margin-bottom: 10px">
-    				<li role="presentation" class="active"><a href='{% url "union:detail" union.id %}'>View All</a></li>
-    				<li role="presentation"><a href='{% url "union:member_add" union.id %}'>Add New Member</a></li>
+    				<li role="presentation"><a href='{% url "union:union_info" union.id %}'>Union Info</a></li>
+                    <li role="presentation" class="active"><a href='{% url "union:detail" union.id %}'>View All</a></li>
+    				<li role="presentation"><a href='{% url "union:member_add" union.id %}'>Add Member</a></li>
     			</ul>
 
     			<div class="panel panel-default">

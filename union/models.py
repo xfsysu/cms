@@ -7,7 +7,7 @@ class Union(models.Model):
 	name = models.CharField(max_length=100, unique=True)
 	logo = models.FileField()
 	created_time = models.DateTimeField(auto_now=True)
-	people = models.IntegerField(default=0)
+	info = models.TextField(blank=True)
 
 	def __unicode__(self):
 		return self.name

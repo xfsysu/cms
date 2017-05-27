@@ -13,7 +13,7 @@ class UnionForm(forms.ModelForm):
 
 	class Meta:
 		model = Union
-		fields = ['name', 'logo']
+		fields = ['name', 'logo', 'info']
 
 
 class MemberForm(forms.ModelForm):

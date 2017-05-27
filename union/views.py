@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.db.models.aggregates import Count
 from .models import Union,Member
 from .forms import UnionForm, MemberForm, UserForm
 
@@ -11,12 +12,16 @@ def index(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('union:login_user'))
 	else:	
-		unions = Union.objects.filter(user=request.user)
+		unions = Union.objects.filter(user=request.user).annotate(num_people=Count('member'))
 		return render(request, 'union/index.html', {'unions':unions})
 
 def detail(request, union_id):
 	union = get_object_or_404(Union, pk=union_id)
 	return render(request, 'union/detail.html', {'union': union})
+
+def union_info(request, union_id):
+	union = get_object_or_404(Union, pk=union_id)
+	return render(request, 'union/union_info.html', {'union': union})
 
 def union_add(request):
 	if not request.user.is_authenticated():
@@ -50,6 +55,7 @@ def union_delete(request, union_id):
 		union = get_object_or_404(Union, pk=union_id)
 		union.delete()
 		return HttpResponseRedirect(reverse('union:index'))
+
 
 def member_add(request, union_id):
 	if not request.user.is_authenticated():

@@ -10,6 +10,9 @@ urlpatterns = [
     #/union/<union_id>/detail
     url(r'^(?P<union_id>[0-9]+)/detail/$', views.detail, name='detail'),
 
+    #/union/<union_id>/detail
+    url(r'^(?P<union_id>[0-9]+)/union_info/$', views.union_info, name='union_info'),
+
     #/union/union_add/
     url(r'^union_add/$', views.union_add, name='union_add'),
 
