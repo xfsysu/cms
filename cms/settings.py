@@ -26,7 +26,16 @@ SECRET_KEY = '*2^0_+j1nkhh=ea!p*=*j!xf77w1&3jfk2($ecq!%$wot7%fq7'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# add search
+# full text search
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'union.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
 
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Application definition
 
@@ -37,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
     'union',
 ]
 

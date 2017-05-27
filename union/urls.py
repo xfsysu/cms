@@ -15,6 +15,9 @@ urlpatterns = [
 
     #/union/union_add/
     url(r'^union_add/$', views.union_add, name='union_add'),
+    
+    #/union/<union_id>/union_edit
+    url(r'^(?P<union_id>[0-9]+)/union_edit/$', views.union_edit, name='union_edit'),
 
     #/union/view_all
     url(r'^view_all/$', views.view_all, name='view_all'),
@@ -39,4 +42,6 @@ urlpatterns = [
 
     #/union/<member_id>/member_edit
     url(r'^(?P<member_id>[0-9]+)/member_edit/$', views.member_edit, name='member_edit'),
+
+    url(r'^full_search/$', views.full_search, name='full_search'),
 ]

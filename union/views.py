@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.db.models.aggregates import Count
 from .models import Union,Member
 from .forms import UnionForm, MemberForm, UserForm
+from haystack.forms import SearchForm
 
 IMAGE_FILE_TYPE = ['jpg', 'png', 'jpeg']
 
@@ -48,6 +49,24 @@ def union_add(request):
 
 		return render(request, 'union/union_add.html', {'form': form})
 
+
+def union_edit(request, union_id):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('union:login_user'))
+	else:
+		union = get_object_or_404(Union, pk=union_id)
+		if request.method == 'POST':
+			form = UnionForm(request.POST or None, request.FILES or None, instance=union)
+			if form.is_valid:
+				union_info = form.save(commit=False)
+				union_info.user = request.user
+				union_info.save()
+				return HttpResponseRedirect(reverse('union:index'))
+
+		if request.method == 'GET':
+			form = UnionForm(instance=union)
+		return render(request, 'union/union_edit.html', {'form': form})
+		
 def union_delete(request, union_id):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('union:login_user'))
@@ -109,6 +128,7 @@ def member_edit(request, member_id):
 		}
 		return render(request, 'union/member_edit.html', context)
 
+
 def view_all(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('union:login_user'))
@@ -160,3 +180,8 @@ def register(request):
 def logout_user(request):
 	logout(request)
 	return HttpResponseRedirect(reverse('union:login_user'))
+
+def full_search(request):
+	sform = SearchForm(request.GET)
+	members = sform.search()
+	return render(request, 'union/full_search.html', {'members': members})

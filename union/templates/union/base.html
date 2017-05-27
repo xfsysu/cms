@@ -43,7 +43,7 @@
 				</li>
 			</ul>
 
-			<form class="navbar-form navbar-left" role="search" method="post" action="#">
+			<form class="navbar-form navbar-left" role="search" method="get" action='{% url "union:full_search" %}'>
 				{% csrf_token %}
 				<div class="form-group">
 					<input type="text" name="q" class="form-control" value="">
