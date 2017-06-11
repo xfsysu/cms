@@ -1,1 +1,4 @@
 Django==1.9
+django-haystack==2.6.1
+jieba==0.38
+Whoosh==2.7.4
